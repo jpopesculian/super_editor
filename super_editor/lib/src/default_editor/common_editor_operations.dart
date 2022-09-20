@@ -1508,38 +1508,38 @@ class CommonEditorOperations {
       return true;
     }
 
-    final blockquoteMatch = RegExp(r'^>\s$');
-    final hasBlockquoteMatch = blockquoteMatch.hasMatch(textBeforeCaret);
-    if (hasBlockquoteMatch) {
-      int startOfNewText = textBeforeCaret.length;
-      while (startOfNewText < node.text.text.length && node.text.text[startOfNewText] == ' ') {
-        startOfNewText += 1;
-      }
-      final adjustedText = node.text.copyText(startOfNewText);
-      final newNode = ParagraphNode(
-        id: node.id,
-        text: adjustedText,
-        metadata: {'blockType': blockquoteAttribution},
-      );
+    // final blockquoteMatch = RegExp(r'^>\s$');
+    // final hasBlockquoteMatch = blockquoteMatch.hasMatch(textBeforeCaret);
+    // if (hasBlockquoteMatch) {
+    //   int startOfNewText = textBeforeCaret.length;
+    //   while (startOfNewText < node.text.text.length && node.text.text[startOfNewText] == ' ') {
+    //     startOfNewText += 1;
+    //   }
+    //   final adjustedText = node.text.copyText(startOfNewText);
+    //   final newNode = ParagraphNode(
+    //     id: node.id,
+    //     text: adjustedText,
+    //     metadata: {'blockType': blockquoteAttribution},
+    //   );
 
-      editor.executeCommand(
-        EditorCommandFunction((document, transaction) {
-          transaction.replaceNode(oldNode: node, newNode: newNode);
-        }),
-      );
+    //   editor.executeCommand(
+    //     EditorCommandFunction((document, transaction) {
+    //       transaction.replaceNode(oldNode: node, newNode: newNode);
+    //     }),
+    //   );
 
-      // We removed some text at the beginning of the list item.
-      // Move the selection back by that same amount.
-      final textPosition = composer.selection!.extent.nodePosition as TextNodePosition;
-      composer.selection = DocumentSelection.collapsed(
-        position: DocumentPosition(
-          nodeId: node.id,
-          nodePosition: TextNodePosition(offset: textPosition.offset - startOfNewText),
-        ),
-      );
+    //   // We removed some text at the beginning of the list item.
+    //   // Move the selection back by that same amount.
+    //   final textPosition = composer.selection!.extent.nodePosition as TextNodePosition;
+    //   composer.selection = DocumentSelection.collapsed(
+    //     position: DocumentPosition(
+    //       nodeId: node.id,
+    //       nodePosition: TextNodePosition(offset: textPosition.offset - startOfNewText),
+    //     ),
+    //   );
 
-      return true;
-    }
+    //   return true;
+    // }
 
     // URL match, e.g., images, social, etc.
     editorOpsLog.fine('Looking for URL match...');
